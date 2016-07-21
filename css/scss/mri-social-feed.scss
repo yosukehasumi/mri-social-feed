@@ -1,0 +1,44 @@
+$border-color: #dadada;
+.mri-tab-titles {
+  display: flex;
+  .mri-tab-title {
+    position: relative;
+    top: 1px;
+    line-height: 36px;
+    padding: 0 20px;
+    cursor: pointer;
+    text-transform: uppercase;
+    border-right: 1px solid $border-color;
+    border-left: 1px solid $border-color;
+    &.active {
+      background: white;
+      border-top: 1px solid $border-color;
+    }
+  }
+}
+.mri-tab-contents {
+  .mri-tab-content {
+    display: none;
+    background: white;
+    border: 1px solid $border-color;
+    padding: 20px;
+    &.active {
+      display: block;
+    }
+    input[type=text] {
+      width: 100%;
+    }
+  }
+}
+
+.mri-repeater {
+  .template-row {
+    display: none;
+  }
+}
+
+p.submit {
+  margin: 10px 10px 0 0;
+  padding: 0;
+  float: left;
+}
