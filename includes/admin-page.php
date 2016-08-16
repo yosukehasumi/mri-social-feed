@@ -15,6 +15,10 @@
       <div class="mri-tab-content" data-id="3"><?php require_once plugin_dir_path(__FILE__).'admin-page-instagram.php'; ?></div>
     </div>
 
+    <div class="card">
+      <input type="checkbox" name="debug" <?php checked( get_option('debug') != null ); ?>> Developer
+    </div>
+
     <?php submit_button(); ?>
   </form>
 

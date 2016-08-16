@@ -79,9 +79,10 @@ class MRISocialFeed {
 
   //---------------------------------------------------------------
   private static function register_post_types() {
+
     register_post_type( 'mri_facebook_post', array(
-      'public' => true,
-      'menu_icon' => 'dashicons-facebook',
+      'public' => ( get_option('debug') == 'on' ? true : false ),
+      'menu_icon' => 'dashicons-star-empty',
       'label'  => 'Facebook',
       'hierarchical' => true,
       'capability_type' => 'post',
@@ -89,8 +90,8 @@ class MRISocialFeed {
       'taxonomies' => array('mri_facebook_category'),
     ));
     register_post_type( 'mri_twitter_post', array(
-      'public' => true,
-      'menu_icon' => 'dashicons-twitter',
+      'public' => ( get_option('debug') == 'on' ? true : false ),
+      'menu_icon' => 'dashicons-star-empty',
       'label'  => 'Twitter',
       'hierarchical' => true,
       'capability_type' => 'post',
@@ -98,8 +99,8 @@ class MRISocialFeed {
       'taxonomies' => array('mri_twitter_category'),
     ));
     register_post_type( 'mri_instagram_post', array(
-      'public' => true,
-      'menu_icon' => 'dashicons-instagram',
+      'public' => ( get_option('debug') == 'on' ? true : false ),
+      'menu_icon' => 'dashicons-star-empty',
       'label'  => 'Instagram',
       'hierarchical' => true,
       'capability_type' => 'post',
@@ -139,6 +140,8 @@ class MRISocialFeed {
     }
 
     function register_mri_social_feed_plugin_settings(){
+      register_setting( 'mri_social_feed_settings_group', 'debug' );
+
       register_setting( 'mri_social_feed_settings_group', 'fb_enable' );
       register_setting( 'mri_social_feed_settings_group', 'fb_app_id' );
       register_setting( 'mri_social_feed_settings_group', 'fb_app_secret' );
