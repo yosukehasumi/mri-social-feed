@@ -7,10 +7,12 @@
     <div class="mri-tab-titles">
       <div class="mri-tab-title active" data-id="1">Facebook</div>
       <div class="mri-tab-title" data-id="2">Twitter</div>
+      <div class="mri-tab-title" data-id="3">Instagram</div>
     </div>
     <div class="mri-tab-contents">
       <div class="mri-tab-content active" data-id="1"><?php require_once plugin_dir_path(__FILE__).'admin-page-facebook.php'; ?></div>
       <div class="mri-tab-content" data-id="2"><?php require_once plugin_dir_path(__FILE__).'admin-page-twitter.php'; ?></div>
+      <div class="mri-tab-content" data-id="3"><?php require_once plugin_dir_path(__FILE__).'admin-page-instagram.php'; ?></div>
     </div>
 
     <?php submit_button(); ?>

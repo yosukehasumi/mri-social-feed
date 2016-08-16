@@ -20,7 +20,8 @@ class MRISocialFeedTwitter {
       'consumer_secret'           => $consumer_secret
     );
 
-    foreach($accounts as $index => $twitter_username){
+    foreach($accounts as $index => $account){
+      $twitter_username = $account['username'];
       $url           = 'https://api.twitter.com/1.1/statuses/user_timeline.json';
       $getfield      = '?screen_name='.$twitter_username.'&count=100&exclude_replies=true&include_rts=true';
       $requestMethod = 'GET';
@@ -66,39 +67,34 @@ class MRISocialFeedTwitter {
     $tweet_text = self::tweet_text($tweet);
 
     $posts = get_posts(array(
-      'meta_key'    => 'twitter_id',
-      'meta_value' => $id,
-      'post_type'   => 'mri_twitter_post',
-      'posts_per_page' => 1
+      'meta_key'       => 'twitter_id',
+      'meta_value'     => $id,
+      'post_type'      => 'mri_twitter_post',
+      'posts_per_page' => -1,
+      'post_status'    => 'any'
     ));
 
-    if(count($posts) == 0){
-      $post_id = wp_insert_post(array(
-        'post_title'  => $title,
-        'post_status' => 'publish',
-        'post_type'   => 'mri_twitter_post',
-        'post_date'   => $timestamp->format('Y-m-d H:i:s'),
-        'post_content'=> $tweet_text
-      ));
-      if(!add_post_meta( $post_id, 'twitter_id', $id, true ) ) {
-        update_post_meta ( $post_id, 'twitter_id', $id );
+    if(count($posts) > 0){
+      foreach($posts as $post){
+        wp_delete_post( $post->ID, true );
       }
-    }else{
-      $post = $posts[0];
-      $post->post_title   = $title;
-      $post->post_date    = $timestamp->format('Y-m-d H:i:s');
-      $post->post_content = $tweet_text;
-      $post_id = wp_update_post( $post );
     }
 
+    $post_id = wp_insert_post(array(
+      'post_title'  => $title,
+      'post_status' => 'publish',
+      'post_type'   => 'mri_twitter_post',
+      'post_date'   => $timestamp->format('Y-m-d H:i:s'),
+      'post_content'=> $tweet_text
+    ));
+
     wp_set_object_terms($post_id, $twitter_username, 'mri_twitter_category');
-    if(!add_post_meta( $post_id, 'twitter_link', $link, true ) ) {
-      update_post_meta ( $post_id, 'twitter_link', $link );
-    }
+
+    add_post_meta ( $post_id, 'twitter_id', $id );
+    add_post_meta ( $post_id, 'twitter_link', $link );
+
     if(isset($tweet->entities->media[0])){
-      if(!add_post_meta( $post_id, 'twitter_image', $tweet->entities->media[0]->media_url, true ) ) {
-        update_post_meta ( $post_id, 'twitter_image', $tweet->entities->media[0]->media_url );
-      }
+      add_post_meta ( $post_id, 'twitter_image', $tweet->entities->media[0]->media_url );
     }
   }
 

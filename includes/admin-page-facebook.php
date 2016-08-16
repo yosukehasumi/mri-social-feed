@@ -30,16 +30,18 @@
   <tr>
     <td><a href="#" class="mri-repeater-add-row-trigger">Add Account</a></td>
   </tr>
+
   <tr valign="top" class="template-row">
     <th scope="row">Pagename</th>
-    <td><input type="text" data-name="fb_accounts[]" placeholder="pagename" value="" /></td>
+    <td><input type="text" data-name="pagename" data-scope="fb_accounts" placeholder="pagename" value="" /></td>
     <td><a href="#" class="mri-repeater-remove-row-trigger">Remove Account</a></td>
   </tr>
+
   <?php if(get_option('fb_accounts')) : ?>
-    <?php foreach(get_option('fb_accounts') as $index => $pagename) : ?>
+    <?php foreach(get_option('fb_accounts') as $index => $account) : ?>
       <tr valign="top">
         <th scope="row">Pagename</th>
-        <td><input type="text" name="fb_accounts[<?php echo $index; ?>]" placeholder="pagename" value="<?php echo esc_attr($pagename); ?>" /></td>
+        <td><input type="text" name="fb_accounts[<?php echo $index; ?>][pagename]" placeholder="pagename" value="<?php echo esc_attr($account['pagename']); ?>" /></td>
         <td><a href="#" class="mri-repeater-remove-row-trigger">Remove Account</a></td>
       </tr>
     <?php endforeach; ?>

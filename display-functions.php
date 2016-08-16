@@ -25,6 +25,16 @@
             ));
           }
         break;
+        case 'instagram' :
+          $post_type = 'mri_instagram_post';
+          if($args['account']){
+            $tax_query = array(array(
+              'taxonomy' => 'mri_instagram_category',
+              'field'    => 'slug',
+              'terms'    => $args['account'],
+            ));
+          }
+        break;
       }
 
       $mri_social_media_posts = get_posts(array(

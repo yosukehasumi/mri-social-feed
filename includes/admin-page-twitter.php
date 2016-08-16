@@ -37,14 +37,14 @@
   </tr>
   <tr valign="top" class="template-row">
     <th scope="row">Username</th>
-    <td><input type="text" data-name="tw_accounts[]" placeholder="username" value="" /></td>
+    <td><input type="text" data-name="username" data-scope="tw_accounts" placeholder="username" value="" /></td>
     <td><a href="#" class="mri-repeater-remove-row-trigger">Remove Account</a></td>
   </tr>
   <?php if(get_option('tw_accounts')) : ?>
-    <?php foreach(get_option('tw_accounts') as $index => $username) : ?>
+    <?php foreach(get_option('tw_accounts') as $index => $account) : ?>
       <tr valign="top">
         <th scope="row">Username</th>
-        <td><input type="text" name="tw_accounts[<?php echo $index; ?>]" placeholder="username" value="<?php echo esc_attr($username); ?>" /></td>
+        <td><input type="text" name="tw_accounts[<?php echo $index; ?>][username]" placeholder="username" value="<?php echo esc_attr($account['username']); ?>" /></td>
         <td><a href="#" class="mri-repeater-remove-row-trigger">Remove Account</a></td>
       </tr>
     <?php endforeach; ?>

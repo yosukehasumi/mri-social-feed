@@ -20,7 +20,8 @@ class MRISocialFeedFacebook {
       'default_access_token'  => $default_access_token,
     ]);
 
-    foreach($accounts as $facebook_pagename){
+    foreach($accounts as $account){
+      $facebook_pagename = $account['pagename'];
       try {
         $response = $fb->get('/'.$facebook_pagename.'/posts');
       } catch(Facebook\Exceptions\FacebookResponseException $e) {
@@ -65,31 +66,28 @@ class MRISocialFeedFacebook {
       'meta_key'    => 'facebook_id',
       'meta_value'  => $id,
       'post_type'   => 'mri_facebook_post',
-      'posts_per_page' => 1
+      'posts_per_page' => -1,
+      'post_status'    => 'any'
     ));
 
-    if(count($posts) == 0){
-      $post_id = wp_insert_post(array(
-        'post_title'  => $title,
-        'post_status' => 'publish',
-        'post_type'   => 'mri_facebook_post',
-        'post_date'   => $timestamp->format('Y-m-d H:i:s'),
-        'post_content'=> $content
-      ));
-      if(!add_post_meta( $post_id, 'facebook_id', $id, true ) ) {
-        update_post_meta ( $post_id, 'facebook_id', $id );
+    if(count($posts) > 0){
+      foreach($posts as $post){
+        wp_delete_post( $post->ID, true );
       }
-    }else{
-      $post = $posts[0];
-      $post->post_title   = $title;
-      $post->post_date    = $timestamp->format('Y-m-d H:i:s');
-      $post->post_content = $content;
-      $post_id = wp_update_post( $post );
     }
 
+    $post_id = wp_insert_post(array(
+      'post_title'  => $title,
+      'post_status' => 'publish',
+      'post_type'   => 'mri_facebook_post',
+      'post_date'   => $timestamp->format('Y-m-d H:i:s'),
+      'post_content'=> $content
+    ));
+
     wp_set_object_terms($post_id, $facebook_pagename, 'mri_facebook_category');
-    if(!add_post_meta( $post_id, 'facebook_link', $link, true ) ) {
-      update_post_meta ( $post_id, 'facebook_link', $link );
-    }
+
+    add_post_meta ( $post_id, 'facebook_id', $id );
+    add_post_meta ( $post_id, 'facebook_link', $link );
+
   }
 }

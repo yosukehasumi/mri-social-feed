@@ -18,7 +18,11 @@ MRISocialFeed = ->
     table = $(this).closest('.mri-repeater')
     template = $(table.find('.template-row')[0].outerHTML)
     template.removeClass('template-row')
-    template.find('input').attr('name', template.find('input').attr('data-name'))
+    timestamp = new Date().getTime()
+    template.find('input').each ->
+      scope = $(this).attr('data-scope')
+      name = $(this).attr('data-name')
+      $(this).attr('name', "#{scope}[#{timestamp}][#{name}]")
     table.append(template)
 
   $(document).on 'click', '.mri-repeater-remove-row-trigger', (event) ->
