@@ -2,7 +2,7 @@
 /*
 Plugin Name:  Medium Rare Social Feed
 Plugin URI:
-Description:  Seriously boilerplate social feed
+Description:  Seriously simple boilerplate social feed
 Version:      1.0.0
 Author:       Yosuke Hasumi
 Author URI:   http://mediumrareinc.com
@@ -172,8 +172,8 @@ class MRISocialFeed {
     if ( ! wp_next_scheduled( 'scrape_twitter' ) ) wp_schedule_event( time(), 'hourly', 'scrape_twitter' );
     add_action( 'scrape_twitter', array( 'MRISocialFeedTwitter', 'scrape_twitter') );
 
-    if ( ! wp_next_scheduled( 'scrape_twitter' ) ) wp_schedule_event( time(), 'hourly', 'scrape_twitter' );
-    add_action( 'scrape_twitter', array( 'MRISocialFeedTwitter', 'scrape_twitter') );
+    if ( ! wp_next_scheduled( 'scrape_instagram' ) ) wp_schedule_event( time(), 'hourly', 'scrape_instagram' );
+    add_action( 'scrape_instagram', array( 'MRISocialFeedInstagram', 'scrape_instagram') );
   }
 }
 
