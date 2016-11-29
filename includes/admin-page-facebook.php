@@ -1,4 +1,5 @@
 <h3>Facebook Settings</h3>
+<p>To generate a access token use this tool: <a href="https://smashballoon.com/custom-facebook-feed/access-token/">https://smashballoon.com/custom-facebook-feed/access-token/</a></p>
 <hr />
 <table class="form-table">
   <tr valign="top">
